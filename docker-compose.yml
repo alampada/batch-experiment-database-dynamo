@@ -1,0 +1,20 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=orders
+  spring-batch-demo:
+    container_name: spring-batch-demo
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: spring-batch-demo:latest
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+    depends_on:
+      - postgres

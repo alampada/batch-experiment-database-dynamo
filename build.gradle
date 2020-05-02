@@ -1,0 +1,35 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.6.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+	id "io.freefair.lombok" version "5.0.1"
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-batch'
+	implementation 'com.amazonaws:aws-java-sdk-dynamodb:1.11.774'
+
+	runtimeOnly 'org.postgresql:postgresql'
+	runtimeOnly 'com.h2database:h2'
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testImplementation 'org.springframework.batch:spring-batch-test'
+}
+
+tasks.bootJar {
+	archiveFileName.set("batch-demo.jar")
+}
+
+test {
+	useJUnitPlatform()
+}
