@@ -33,7 +33,6 @@ public class OrderWithProductsDynamoWriter implements ItemWriter<OrderWithProduc
 
     @Override
     public void write(List<? extends OrderWithProducts> items) throws Exception {
-        LOGGER.info("called with " + items);
         LOGGER.info(String.format("Writing %d items to dynamo", items.size()));
         try {
             List<Item> itemsToPut = items.stream()

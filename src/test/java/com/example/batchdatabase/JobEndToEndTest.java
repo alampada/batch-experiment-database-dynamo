@@ -2,9 +2,9 @@ package com.example.batchdatabase;
 
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.TableWriteItems;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.test.JobLauncherTestUtils;
@@ -14,12 +14,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 
+@ExtendWith(SpringExtension.class)
 @SpringBatchTest
-@RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {BatchDatabaseApplication.class})
 @TestPropertySource("classpath:application-test.properties")
 public class JobEndToEndTest {
@@ -42,7 +43,7 @@ public class JobEndToEndTest {
 
 
         JobExecution jobExecution = jobLauncherTestUtils.launchJob();
-        Assert.assertEquals("COMPLETED", jobExecution.getExitStatus().getExitCode());
+        assertThat(jobExecution.getExitStatus().getExitCode()).isEqualTo("COMPLETED");
         Mockito.verify(dynamoDB, Mockito.times(1)).batchWriteItem(any(TableWriteItems.class));
     }
 
