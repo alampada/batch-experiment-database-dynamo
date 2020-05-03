@@ -25,7 +25,7 @@ public class OrderWithProductsDynamoWriter implements ItemWriter<OrderWithProduc
     private final DynamoDB dynamoDb;
 
     public OrderWithProductsDynamoWriter(
-            @Value("${dynamodb.tableArn}") String tableName,
+            @Value("${dynamodb.tableName}") String tableName,
             DynamoDB dynamoDb) {
         this.tableName = tableName;
         this.dynamoDb = dynamoDb;

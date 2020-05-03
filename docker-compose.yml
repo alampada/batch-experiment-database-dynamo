@@ -6,6 +6,8 @@ services:
       - POSTGRES_PASSWORD=mysecretpassword
       - POSTGRES_USER=postgres
       - POSTGRES_DB=orders
+  dynamo:
+    image: amazon/dynamodb-local
   spring-batch-demo:
     container_name: spring-batch-demo
     build:
@@ -16,5 +18,7 @@ services:
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - AWS_REGION=${AWS_REGION}
+      - spring_profiles_active=${SPRING_PROFILE}
     depends_on:
       - postgres
+      - dynamo
