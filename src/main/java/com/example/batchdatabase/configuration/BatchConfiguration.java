@@ -23,6 +23,20 @@ import javax.sql.DataSource;
 @Component
 public class BatchConfiguration extends DefaultBatchConfigurer {
 
+    @Autowired
+    private BatchProperties batchProperties;
+
+    public BatchConfiguration() {
+    }
+
+    public BatchConfiguration(DataSource dataSource) {
+        super(dataSource);
+    }
+
+    public void setBatchProperties(BatchProperties batchProperties) {
+        this.batchProperties = batchProperties;
+    }
+
     @Override
     @Autowired
     public void setDataSource(@Qualifier("metadataDataSource") DataSource dataSource) {
@@ -31,7 +45,7 @@ public class BatchConfiguration extends DefaultBatchConfigurer {
 
     @Bean
     public BatchDataSourceInitializer  batchDataSourceInitializer(@Qualifier("metadataDataSource") DataSource dataSource, ResourceLoader resourceLoader){
-        BatchDataSourceInitializer batchDatabaseInitializer = new  BatchDataSourceInitializer(dataSource, resourceLoader, new BatchProperties());
+        BatchDataSourceInitializer batchDatabaseInitializer = new  BatchDataSourceInitializer(dataSource, resourceLoader, batchProperties);
         return batchDatabaseInitializer;
     }
 }

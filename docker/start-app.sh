@@ -1,3 +1,3 @@
 #!/bin/bash
 
-java -jar batch-demo.jar
+java -jar /app/batch-demo.jar --spring.batch.job.names=job

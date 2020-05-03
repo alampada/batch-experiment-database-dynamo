@@ -4,7 +4,6 @@ import com.amazonaws.services.dynamodbv2.model.AmazonDynamoDBException;
 import com.example.batchdatabase.model.Order;
 import com.example.batchdatabase.model.OrderWithProducts;
 import com.example.batchdatabase.processor.AddProductsProcessor;
-import com.example.batchdatabase.writter.SystemOutWriter;
 import com.example.batchdatabase.writter.dynamo.OrderWithProductsDynamoWriter;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -39,7 +38,7 @@ public class BatchProcessConfiguration {
                 .get("step")
                 .<Order, OrderWithProducts>chunk(25)
                 .faultTolerant()
-                .retryLimit(5)
+                .retryLimit(2)
                 .retry(AmazonDynamoDBException.class)
                 .reader(itemReader)
                 .processor(addProductsProcessor)
